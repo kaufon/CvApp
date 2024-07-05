@@ -1,11 +1,11 @@
-FROM node:latest
+FROM node:17-alpine
 
-WORKDIR /home/pn
+WORKDIR /app
 
-COPY . .
+COPY package.json .
 
 RUN npm i
 
-EXPOSE 5173 
+COPY . .
 
-CMD npm run dev 
+CMD ["npm","run","dev"]

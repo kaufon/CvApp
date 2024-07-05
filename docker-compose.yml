@@ -3,7 +3,7 @@ services:
   app:
     build: .
     ports:
-      - "5173:5173"
+      - "8080:8080"
     volumes:
-      - .:/home/pn
+      - .:/app
     command: npm run dev

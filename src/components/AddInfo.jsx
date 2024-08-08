@@ -34,7 +34,7 @@ function AddInfo() {
           {show && (
             <div id="personaInfo" className="bg-gray-200 rounded-b-lg border-1">
               <div className="flex flex-col justify-center items-center space-y-1">
-                {Object.entries(PersonalInfo).map(([key, value], index) => (
+                {Object.entries(PersonalInfo).map(([key, value]) => (
                   <Input
                     style={"w-[90%] border-black border-2 p-2.5 rounded-md"}
                     key={key}
@@ -44,7 +44,6 @@ function AddInfo() {
                     value={value}
                     disabled={!edit}
                   />
-
                 ))}
               </div>
               <div className="flex justify-center">

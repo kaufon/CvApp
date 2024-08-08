@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ShowInfo from "./ShowInfo";
 import Input from "./Input";
-import {  LoaderCircle } from "lucide-react";
+import { ChevronDown, ChevronUp, LoaderCircle } from "lucide-react";
 
 function AddInfo() {
   const [PersonalInfo, updatePersonalInfo] = useState({
@@ -30,7 +30,14 @@ function AddInfo() {
               setShow(!show);
             }}
           >
-            Personal
+            <span className="flex justify-center items-center gap-2">
+              Personal{" "}
+              {show ? (
+                <ChevronDown className="size-5 text-black " />
+              ) : (
+                <ChevronUp className="size-5 text-black" />
+              )}
+            </span>
           </button>
           {show && (
             <div id="personaInfo" className="bg-gray-200 rounded-b-lg border-1">
@@ -76,8 +83,10 @@ function AddInfo() {
           <ShowInfo PersonalInfo={PersonalInfo} />
         ) : (
           <div className="flex justify-center items-center h-screen font-bold  text-4xl">
-            Editing info <span className=""><LoaderCircle className="size-10 flex items-end animate-spin" /></span>
-
+            Editing info{" "}
+            <span className="">
+              <LoaderCircle className="size-10 flex items-end animate-spin" />
+            </span>
           </div>
         )}
       </div>

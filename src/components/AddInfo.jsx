@@ -46,7 +46,7 @@ function AddInfo() {
                   />
                 ))}
               </div>
-              <div className="flex justify-center">
+              <div className="flex justify-center space-x-2">
                 <button
                   type="button"
                   onClick={() => {
@@ -57,7 +57,7 @@ function AddInfo() {
                   Save
                 </button>
                 <button
-                  className="m-1"
+                  className=""
                   type="button"
                   onClick={() => {
                     setEdit(true);
@@ -70,7 +70,7 @@ function AddInfo() {
           )}
         </div>
       </aside>
-      <div className="p-4 ml-[33%]">
+      <div className=" ml-[33%]">
         {edit == false ? (
           <ShowInfo PersonalInfo={PersonalInfo} />
         ) : (

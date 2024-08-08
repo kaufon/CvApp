@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ShowInfo from "./ShowInfo";
 import Input from "./Input";
+import {  LoaderCircle } from "lucide-react";
 
 function AddInfo() {
   const [PersonalInfo, updatePersonalInfo] = useState({
@@ -74,7 +75,10 @@ function AddInfo() {
         {edit == false ? (
           <ShowInfo PersonalInfo={PersonalInfo} />
         ) : (
-          <div>Editing info</div>
+          <div className="flex justify-center items-center h-screen font-bold  text-4xl">
+            Editing info <span className=""><LoaderCircle className="size-10 flex items-end animate-spin" /></span>
+
+          </div>
         )}
       </div>
     </>

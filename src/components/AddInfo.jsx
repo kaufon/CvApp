@@ -235,7 +235,7 @@ function AddInfo() {
       </aside>
       <div className=" ml-[33%]">
         {edit == false ? (
-          <ShowInfo PersonalInfo={PersonalInfo} Degrees={initialDegree} />
+          <ShowInfo PersonalInfo={PersonalInfo} Degrees={degrees} />
         ) : (
           <div className="flex justify-center items-center h-screen font-bold  text-4xl">
             Editing info{" "}

@@ -1,6 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 
-const ShowInfo = ({ PersonalInfo }) => {
+const ShowInfo = ({ PersonalInfo , Degrees}) => {
   return (
     <>
       <div className="bg-blue-700 text-white flex justify-between h-32">

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ShowInfo from "./ShowInfo";
 import Input from "./Input";
-import { ChevronDown, ChevronUp, LoaderCircle } from "lucide-react";
+import { ChevronDown, ChevronUp, Dice1, LoaderCircle, X } from "lucide-react";
 
 function AddInfo() {
   const [PersonalInfo, updatePersonalInfo] = useState({
@@ -12,10 +12,14 @@ function AddInfo() {
   });
 
   const [degrees, setDegrees] = useState([
-    { id: 1, degreeName: "Ensino medoio", degree: "diploma", year: 2019 },
+    {
+      id: 0,
+      degreeName: "High School",
+      degree: "High School Diploma",
+      year: 2019,
+    },
   ]);
   const [initialDegree, setInitialDegree] = useState(degrees[0]);
-  console.log(initialDegree);
   const [show, setShow] = useState(false);
   const [showDegree, setShowDegree] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -30,17 +34,29 @@ function AddInfo() {
     const { name, value } = e.target;
     setInitialDegree((prevState) => ({
       ...prevState,
+
       [name]: value,
     }));
   };
-  const saveNewDegre = (e) => {
+  const deleteDegree = (key) => {
+    const newDegrees = degrees.filter((degree) => degree.id !== key);
+    setDegrees(newDegrees);
+  };
+
+  const saveNewDegree = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
     const degreeName = formData.get("degreeName");
     const degree = formData.get("degree");
     const year = formData.get("year");
-    const newDegree = { degreeName, degree, year };
-    console.log(newDegree);
+    let id;
+    if (degrees.length > 0) {
+      id = degrees[degrees.length - 1].id + 1;
+    } else {
+      id = 1;
+    }
+    const newDegree = { id, degreeName, degree, year };
+    setDegrees((prevState) => [...prevState, newDegree]);
   };
   return (
     <>
@@ -55,7 +71,7 @@ function AddInfo() {
               }}
             >
               <span className="flex justify-center items-center gap-2">
-                Personal{" "}
+                Personal Information
                 {show ? (
                   <ChevronDown className="size-5 text-black " />
                 ) : (
@@ -96,10 +112,10 @@ function AddInfo() {
                     className=""
                     type="button"
                     onClick={() => {
-                      setEdit(true);
+                      setEdit(!edit);
                     }}
                   >
-                    Edit
+                    {edit ? "Stop Editing" : "Edit"}
                   </button>
                 </div>
               </div>
@@ -124,61 +140,93 @@ function AddInfo() {
             </span>
           </button>
           {showDegree && (
-            <form onSubmit={saveNewDegre}>
+            <form onSubmit={saveNewDegree}>
               <div
                 id="personaInfo"
-                className="bg-gray-200 rounded-b-lg border-1"
+                className="bg-gray-200 rounded-b-lg border-1 space-y-4"
               >
                 <div className="flex flex-col justify-center items-center space-y-1">
                   <Input
                     style={"w-[90%] border-black border-2 p-2.5 rounded-md"}
-                    key={degrees[degrees.length - 1].degreeName}
                     type="text"
                     onChange={handleInitialDegreeDiff}
                     name="degreeName"
-                    value={degrees[degrees.length - 1].degreeName}
+                    value={initialDegree.degreeName}
                     disabled={!edit}
                   />
 
                   <Input
                     style={"w-[90%] border-black border-2 p-2.5 rounded-md"}
-                    key={degrees[degrees.length - 1].degree}
                     type="text"
                     onChange={handleInitialDegreeDiff}
                     name="degree"
-                    value={degrees[degrees.length - 1].degree}
+                    value={initialDegree.degree}
                     disabled={!edit}
                   />
 
                   <Input
                     style={"w-[90%] border-black border-2 p-2.5 rounded-md"}
-                    key={degrees[degrees.length - 1].year}
-                    type="text"
+                    type="number"
                     onChange={handleInitialDegreeDiff}
                     name="year"
-                    value={degrees[degrees.length - 1].year}
+                    value={initialDegree.year}
                     disabled={!edit}
                   />
                 </div>
-                <div className="flex justify-center space-x-2">
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      setEdit(false);
-                    }}
-                    disabled={edit == false}
-                  >
-                    Save
-                  </button>
+                <div className="flex justify-center space-x-8">
+                  {edit && (
+                    <button type="submit" disabled={edit == false}>
+                      Add Degree
+                    </button>
+                  )}
+
                   <button
                     className=""
                     type="button"
                     onClick={() => {
-                      setEdit(true);
+                      setEdit(!edit);
                     }}
                   >
-                    Edit
+                    {edit ? "Stop Editing" : "Edit"}
                   </button>
+                </div>
+                <div className="w-full h-px bg-black" />
+                <div className="font-bold items-center flex justify-center text-black w-full">
+                  Degrees
+                </div>
+                <div>
+                  {degrees.map((degree) => {
+                    if (!degree.year) {
+                      return null;
+                    }
+                    return (
+                      <div
+                        key={degree.id}
+                        className="flex justify-center items-center"
+                      >
+                        <div className="flex justify-between w-[90%] mb-2">
+                          <span className="border-black border-2 rounded-md bg-white  p-2.5">
+                            {degree.degreeName}
+                          </span>
+                          <span className="border-black border-2 rounded-md bg-white  p-2.5">
+                            {degree.degree}
+                          </span>
+                          <span className="border-black border-2 rounded-md bg-white  p-2.5 ">
+                            {degree.year}
+                          </span>
+                          <div className="flex items-center justify-center">
+                            <button
+                              onClick={() => {
+                                deleteDegree(degree.id);
+                              }}
+                            >
+                              <X className="size-5 text-red-700 " />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </form>

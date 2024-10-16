@@ -1,1 +1,1 @@
-🚧WORK IN PROGRESS 🚧
+# Um site para criar seu currículo!
